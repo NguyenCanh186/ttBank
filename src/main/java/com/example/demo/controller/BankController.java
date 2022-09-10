@@ -28,12 +28,19 @@ public class BankController {
     public ModelAndView saveBlog(@ModelAttribute("amount") Amount amount) {
         BankAccountInfo from = bankService.findById(amount.getId()).get();
         BankAccountInfo to = bankService.findById(amount.getId2()).get();
-        from.setBalance(from.getBalance() - amount.getAmount());
-        to.setBalance(to.getBalance() + amount.getAmount());
-        bankService.save(bankService.save(from));
-        bankService.save(bankService.save(to));
-        ModelAndView modelAndView = new ModelAndView("/create");
-        modelAndView.addObject("message", "New transaction successfully");
+        ModelAndView modelAndView = new ModelAndView();
+        if(from != null && to != null){
+            from.setBalance(from.getBalance() - amount.getAmount());
+            to.setBalance(to.getBalance() + amount.getAmount());
+            bankService.save(bankService.save(from));
+            bankService.save(bankService.save(to));
+            modelAndView = new ModelAndView("/create");
+            modelAndView.addObject("message", "New transaction successfully");
+        } else{
+            modelAndView = new ModelAndView("/create");
+            modelAndView.addObject("message", "Id user does not exist");
+        }
+
         return modelAndView;
     }
 
