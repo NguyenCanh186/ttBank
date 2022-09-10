@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create transaction</title>
+</head>
+<body>
+<h1>Create transaction</h1>
+<p>
+    <a href="/banks">User list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/create}" th:object="${amount}" method="post">
+    <table>
+        <tr>
+            <td>from:</td>
+            <td><input type="text" th:field="*{id}"/></td>
+        </tr>
+        <tr>
+            <td>to:</td>
+            <td><input type="text" th:field="*{id2}"/></td>
+        </tr>
+        <tr>
+            <td>amount:</td>
+            <td><input type="text" th:field="*{amount}"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Create transaction"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
